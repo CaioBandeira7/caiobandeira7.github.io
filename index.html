@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Caio Bandeira | Data Scientist</title>
+<meta name="description" content="Caio Bandeira, data scientist in Brasília. Machine-learning systems built on Brazilian public data.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232E5AA7'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Arial' font-weight='700' font-size='15' fill='%23F8E6A0'%3ECB%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --citrus: #FFA62B;
+    --sea: #86C5FF;
+    --amalfi: #2E5AA7;
+    --gelato: #F8E6A0;
+    --paper: #FFFBF0;
+    --ink: #142A52;
+    --muted: #4A5D80;
+    --sea-soft: #E3F1FF;
+    --display: "Bricolage Grotesque", system-ui, sans-serif;
+    --body: "Schibsted Grotesk", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  html.lenis, html.lenis body { height: auto; }
+  .lenis.lenis-smooth { scroll-behavior: auto !important; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 400 1.0625rem/1.6 var(--body); overflow-x: hidden; }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--citrus); outline-offset: 3px; border-radius: 4px; }
+  img { display: block; max-width: 100%; }
+  .sticky { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
+
+  /* Background: liquid + a colour wash that changes per chapter */
+  #liquid { position: fixed; inset: 0; z-index: -2; }
+  #liquid canvas { width: 100%; height: 100%; display: block; }
+  #wash { position: fixed; inset: 0; z-index: -1; background: var(--amalfi); opacity: 0; pointer-events: none; }
+
+  /* Name, top right */
+  .sig { position: fixed; top: 22px; right: 28px; z-index: 30; text-align: right; line-height: 1.15; transition: color .4s; }
+  .sig b { display: block; font: 800 1.15rem var(--display); letter-spacing: -0.02em; }
+  .sig span { font-size: .85rem; color: var(--muted); transition: color .4s; }
+  body.on-dark .sig, body.on-dark .sig span { color: #fff; }
+
+  /* ---------- 1. Hero: portrait frame that shrinks into About ---------- */
+  #hero { height: 260vh; }
+  .frame {
+    position: absolute; left: 50%; bottom: 0;
+    width: min(94vh, 100vw); aspect-ratio: 1 / 1;
+    margin-left: calc(min(94vh, 100vw) / -2);
+    transform-origin: 50% 70%;
+    will-change: transform; cursor: none; touch-action: pan-y;
+    /* soft edges so the shoulders melt into the background instead of ending in a hard line */
+    -webkit-mask-image: linear-gradient(to bottom, #000 78%, transparent 100%), radial-gradient(ellipse 58% 90% at 50% 40%, #000 72%, transparent 100%);
+    -webkit-mask-composite: source-in;
+            mask-image: linear-gradient(to bottom, #000 78%, transparent 100%), radial-gradient(ellipse 58% 90% at 50% 40%, #000 72%, transparent 100%);
+            mask-composite: intersect;
+  }
+  .frame canvas, .frame img { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .frame img { object-fit: contain; object-position: bottom; }
+  .frame.ready img { visibility: hidden; }
+  .ring { position: absolute; left: 0; top: 0; width: 46px; height: 46px; margin: -23px 0 0 -23px; border: 1.5px solid var(--ink); border-radius: 50%; pointer-events: none; opacity: 0; transition: opacity .2s; }
+  .frame:hover .ring { opacity: 1; }
+  .headline { position: absolute; z-index: 3; margin: 0; font: 800 clamp(2.4rem, 4.4vw, 4.6rem)/0.92 var(--display); letter-spacing: -0.04em; pointer-events: none; }
+  .headline.l { left: 4vw; top: 44%; }
+  .headline.r { right: 4vw; top: 58%; text-align: right; }
+  .headline em { font-style: normal; color: var(--amalfi); }
+  .hint { position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%); font-size: .85rem; color: var(--muted); display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .hint i { width: 1.5px; height: 26px; background: var(--muted); transform-origin: top; animation: drip 1.8s ease-in-out infinite; }
+  @keyframes drip { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); } 100% { transform: scaleY(0); transform-origin: bottom; } }
+
+  .about { position: absolute; left: 50vw; top: 50%; width: min(42vw, 600px); transform: translateY(-50%); opacity: 0; visibility: hidden; }
+  .about .eyebrow { font-weight: 600; color: var(--amalfi); margin: 0 0 8px; }
+  .about h2 { font: 800 clamp(2.2rem, 4.2vw, 3.6rem)/0.98 var(--display); letter-spacing: -0.035em; margin: 0 0 20px; }
+  .about .stats { display: flex; gap: 28px; margin: 18px 0 4px; padding: 0; list-style: none; }
+  .about .stats li { font-size: .85rem; color: var(--muted); line-height: 1.25; }
+  .about .stats b { display: block; font: 800 1.7rem/1 var(--display); color: var(--ink); letter-spacing: -0.02em; }
+  .about p { margin: 0 0 14px; max-width: 54ch; }
+  .tools { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 10px; margin: 22px 0 0; padding: 0; list-style: none; }
+  .tools li { background: rgba(255,255,255,.75); border-radius: 14px; padding: 10px 6px 8px; text-align: center; font-size: .74rem; color: var(--muted); line-height: 1.2; }
+  .tools svg { width: 26px; height: 26px; margin: 0 auto 6px; display: block; }
+
+  /* ---------- 2. Skills ticker ---------- */
+  .ticker { padding: 26px 0; overflow: hidden; }
+  .ticker .row { display: flex; width: max-content; gap: 14px; animation: slide 46s linear infinite; }
+  .ticker .row.rev { animation-direction: reverse; margin-top: 14px; }
+  .ticker .chip { display: inline-flex; align-items: center; gap: 10px; background: #fff; border-radius: 999px; padding: 12px 22px 12px 14px; font: 600 1.05rem var(--display); white-space: nowrap; }
+  .ticker .chip svg { width: 24px; height: 24px; }
+  @keyframes slide { to { transform: translateX(-50%); } }
+
+  /* ---------- 3. Projects zoom ---------- */
+  #zoom { height: 300vh; }
+  .zl { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; will-change: transform; }
+  .zl > .tile { position: relative; width: 25vw; height: 25vh; border-radius: 6px; overflow: hidden; }
+  .zl:nth-child(2) > .tile { top: -30vh; left: 5vw; width: 35vw; height: 30vh; }
+  .zl:nth-child(3) > .tile { top: -10vh; left: -25vw; width: 20vw; height: 45vh; }
+  .zl:nth-child(4) > .tile { left: 27.5vw; width: 25vw; height: 25vh; }
+  .zl:nth-child(5) > .tile { top: 27.5vh; left: 5vw; width: 20vw; height: 25vh; }
+  .zl:nth-child(6) > .tile { top: 27.5vh; left: -22.5vw; width: 30vw; height: 25vh; }
+  .zl:nth-child(7) > .tile { top: 22.5vh; left: 25vw; width: 15vw; height: 15vh; }
+  .tile { display: flex; flex-direction: column; justify-content: center; padding: 3% 5%; }
+  .tile.pic { padding: 0; background: #DCE6F2; }
+  .tile.pic img, .tile.pic svg { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .tile.code { background: #0F1E3D; padding: 4% 6%; justify-content: center; }
+  .tile.code pre { margin: 0; color: #DCE8FF; font: 500 .5vw/1.45 ui-monospace, Menlo, Consolas, monospace; white-space: pre; }
+  .tile.code .k { color: #86C5FF; } .tile.code .f { color: #FFA62B; } .tile.code .n { color: #F8E6A0; }
+  .t-title { background: var(--amalfi); color: #fff; align-items: center; text-align: center; }
+  .t-title b { font: 800 2.6vw/1 var(--display); letter-spacing: -0.03em; }
+  .t-title span { font-size: .8vw; opacity: .85; margin-top: .6vh; }
+  .t-sea { background: var(--sea); }
+  .t-gel { background: var(--gelato); }
+  .t-cit { background: #FFD08A; }
+  .t-white { background: #fff; }
+  .tile .big { font: 800 3.2vw/1 var(--display); letter-spacing: -0.03em; }
+  .tile .small { font-size: .9vw; color: var(--muted); }
+  .tile .chips { display: flex; flex-wrap: wrap; gap: .4vw; }
+  .tile .chips i { font-style: normal; background: var(--sea-soft); border-radius: 4px; padding: .2vw .6vw; font-size: .8vw; }
+  .tile .mini-bar { height: .6vh; background: rgba(20,42,82,.12); border-radius: 3px; margin: .5vh 0 1vh; overflow: hidden; }
+  .tile .mini-bar i { display: block; height: 100%; background: var(--citrus); }
+  .tile .lbl { font-size: .8vw; display: flex; justify-content: space-between; }
+  .tile svg.routes { width: 100%; height: 100%; }
+  .tile .flow-mini { display: grid; gap: .6vh; font-size: .85vw; }
+  .tile .flow-mini div { background: #fff; border-radius: 4px; padding: .5vh .7vw; border-left: 3px solid var(--amalfi); }
+
+  /* ---------- 4. Project scenes ---------- */
+  .scene { height: 190vh; }
+  .scene .sticky { display: grid; grid-template-columns: 1.05fr 1fr; gap: 6vw; align-items: center; padding: 0 7vw; }
+  .scene .copy > * { opacity: 0; transform: translateY(30px); }
+  .scene .kicker { display: inline-flex; gap: 10px; align-items: center; font-weight: 600; font-size: .95rem; }
+  .scene .kicker em { font-style: normal; font-weight: 600; font-size: .78rem; padding: 3px 9px; border-radius: 4px; }
+  .scene h3 { font: 800 clamp(2.4rem, 5vw, 4.4rem)/0.95 var(--display); letter-spacing: -0.04em; margin: 14px 0 16px; }
+  .scene .what { font: 400 clamp(1.1rem, 1.6vw, 1.35rem)/1.35 var(--display); margin: 0 0 18px; max-width: 34ch; }
+  .scene ul.points { margin: 0 0 20px; padding-left: 1.1em; max-width: 52ch; }
+  .scene ul.points li { margin-bottom: .4em; }
+  .scene .stack { display: flex; flex-wrap: wrap; gap: 7px; padding: 0; margin: 0 0 22px; list-style: none; }
+  .scene .stack li { border-radius: 4px; padding: 2px 9px; font-size: .88rem; }
+  .scene .more { display: flex; gap: 22px; flex-wrap: wrap; font-weight: 500; }
+  .scene .visual { opacity: 0; transform: scale(.9); }
+  .scene .sticky > .copy, .scene .sticky > .visual { position: relative; z-index: 1; }
+  .scene-bg { position: absolute; inset: 0; z-index: 0; }
+  .scene-bg img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; transform: scale(1.15); }
+  #mandato .scene-bg img { object-position: 60% 50%; }
+  .scene-bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, rgba(20,42,82,.92) 0%, rgba(46,90,167,.78) 55%, rgba(46,90,167,.45) 100%); }
+
+  .dark { color: #fff; }
+  .dark ul.points li::marker { color: var(--gelato); }
+  .dark .kicker em { background: var(--gelato); color: var(--ink); }
+  .dark .stack li { background: rgba(255,255,255,.14); }
+  .dark .kicker { color: var(--gelato); }
+  .dark .more a { color: var(--gelato); }
+  .predict { background: #fff; color: var(--ink); border-radius: 18px; padding: 26px 26px 20px; box-shadow: 0 40px 80px -40px rgba(0,0,0,.45); }
+  .predict .req { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 14px; border-bottom: 1px solid #E4E9F2; margin-bottom: 18px; }
+  .predict .route { font: 800 2rem/1 var(--display); letter-spacing: -0.02em; }
+  .predict .route span { color: var(--citrus); padding: 0 6px; }
+  .predict .meta { font-size: .85rem; color: var(--muted); text-align: right; }
+  .meter { margin-bottom: 15px; }
+  .meter .row { display: flex; justify-content: space-between; font-size: .95rem; margin-bottom: 5px; }
+  .meter .bar { height: 8px; background: #EDF1F7; border-radius: 4px; overflow: hidden; }
+  .meter .bar i { display: block; height: 100%; width: 0; background: var(--citrus); border-radius: 4px; }
+  .meter small { display: block; color: var(--muted); font-size: .8rem; margin-top: 3px; }
+  .cap { font-size: .85rem; margin-top: 10px; opacity: .8; }
+
+  .light ul.points li::marker { color: var(--citrus); }
+  .light .kicker em { color: var(--muted); border: 1px solid rgba(20,42,82,.25); }
+  .light .stack li { background: #fff; }
+  .light .more a { color: var(--amalfi); }
+  .flow { display: grid; gap: 10px; }
+  .flow .tier { color: var(--ink); background: #fff; border-radius: 14px; padding: 16px 18px; border-left: 5px solid var(--sea); box-shadow: 0 20px 50px -35px rgba(20,42,82,.5); }
+  .flow .tier.ai { border-left-color: var(--citrus); }
+  .flow .tier.app { border-left-color: var(--amalfi); }
+  .flow .tier b { display: block; font: 600 1.1rem var(--display); }
+  .flow .tier span { font-size: .92rem; color: var(--muted); }
+  .flow .down { text-align: center; color: var(--muted); line-height: 1; }
+
+  /* ---------- 5. Toolkit morph ---------- */
+  #morph { height: 420vh; }
+  .orbit { position: absolute; left: 50%; top: 50%; width: 0; height: 0; }
+  .card { position: absolute; left: -38px; top: -46px; width: 76px; height: 92px; background: #fff; border-radius: 16px; box-shadow: 0 16px 40px -24px rgba(20,42,82,.5); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; font-size: .68rem; color: var(--muted); text-align: center; line-height: 1.1; will-change: transform, opacity; }
+  .card svg { width: 30px; height: 30px; }
+  .morph-intro { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); text-align: center; pointer-events: none; width: min(90vw, 560px); }
+  .morph-intro h2 { font: 800 clamp(1.5rem, 2.6vw, 2.4rem)/1 var(--display); letter-spacing: -0.035em; margin: 0 0 10px; }
+  .morph-intro p { margin: 0; color: var(--muted); }
+  .knows { position: absolute; left: 50%; top: 8vh; transform: translateX(-50%); width: min(94vw, 1240px); opacity: 0; }
+  .knows h2 { font: 800 clamp(2.4rem, 4.6vw, 4rem)/1 var(--display); letter-spacing: -0.04em; margin: 0 0 28px; text-align: center; }
+  .knows ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .knows li { background: rgba(255,255,255,.72); border-radius: 18px; padding: 20px 22px 22px; border-top: 4px solid var(--sea); }
+  .knows li:nth-child(3n+2) { border-top-color: var(--citrus); }
+  .knows li:nth-child(3n) { border-top-color: var(--amalfi); }
+  .knows li b { display: block; font: 700 clamp(1.25rem, 1.9vw, 1.6rem)/1.15 var(--display); letter-spacing: -0.02em; margin-bottom: 6px; }
+  .knows li span { color: var(--muted); font-size: clamp(.95rem, 1.15vw, 1.08rem); line-height: 1.45; }
+
+  /* ---------- 6. Experience ---------- */
+  #experience { padding: 14vh 7vw 16vh; }
+  #experience .inner { max-width: 1060px; margin: 0 auto; display: grid; grid-template-columns: 260px 1fr; gap: 48px; }
+  #experience h2 { font: 800 clamp(2.2rem, 4vw, 3.4rem)/1 var(--display); letter-spacing: -0.035em; margin: 0; }
+  .timeline { list-style: none; margin: 0; padding: 0; }
+  .timeline li { display: grid; grid-template-columns: 1fr auto; gap: 2px 20px; padding: 20px 0; border-bottom: 1px solid rgba(20,42,82,.12); }
+  .timeline li:first-child { padding-top: 0; }
+  .timeline h3 { font: 600 1.25rem/1.25 var(--display); margin: 0; }
+  .timeline .org { color: var(--muted); }
+  .timeline .when { font-size: .92rem; color: var(--muted); text-align: right; white-space: nowrap; }
+  .timeline p { grid-column: 1 / -1; margin: 6px 0 0; max-width: 64ch; }
+  .sub { font: 600 1.05rem var(--body); margin: 40px 0 12px; }
+  .reveal { opacity: 0; transform: translateY(26px); }
+
+  /* ---------- 7. Contact ---------- */
+  #contact { min-height: 100vh; display: flex; align-items: center; padding: 0 7vw; }
+  #contact .inner { max-width: 1060px; margin: 0 auto; width: 100%; }
+  #contact h2 { font: 800 clamp(3.4rem, 10vw, 9rem)/0.9 var(--display); letter-spacing: -0.05em; margin: 0 0 24px; }
+  #contact p { font: 400 clamp(1.1rem, 1.8vw, 1.45rem)/1.4 var(--display); max-width: 36ch; margin: 0 0 32px; }
+  .links { display: flex; flex-wrap: wrap; gap: 12px; list-style: none; padding: 0; margin: 0; }
+  .btn { display: inline-block; padding: 13px 22px; border: 1.5px solid var(--ink); border-radius: 999px; color: var(--ink); text-decoration: none; font-weight: 500; }
+  .btn:hover { background: var(--ink); color: var(--paper); }
+  .btn.primary { background: var(--amalfi); border-color: var(--amalfi); color: #fff; }
+  .btn.primary:hover { background: var(--ink); border-color: var(--ink); }
+  footer { padding: 0 7vw 36px; color: var(--muted); font-size: .88rem; }
+
+  /* ---------- Mobile ---------- */
+  @media (max-width: 860px) {
+    .sig { top: 16px; right: 18px; }
+    .headline { font-size: clamp(2.3rem, 11vw, 3.2rem); }
+    .headline.l { left: 6vw; top: 96px; }
+    .headline.r { left: 6vw; right: auto; top: calc(96px + 0.92 * clamp(2.3rem, 11vw, 3.2rem)); text-align: left; }
+    .tile.code pre { font-size: 1.15vw; }
+    .frame { width: min(100vw, 72vh); margin-left: calc(min(100vw, 72vh) / -2); transform-origin: 50% 0; }
+    .about .stats { gap: 16px; margin-top: 10px; } .about .stats b { font-size: 1.25rem; } .about .stats li { font-size: .72rem; }
+    .about { left: 6vw; width: 88vw; top: auto; bottom: 4vh; transform: none; }
+    .about h2 { font-size: 2rem; margin-bottom: 10px; }
+    .about p { font-size: .95rem; margin-bottom: 8px; }
+    .about p.more-sm { display: none; }
+    .tools { grid-template-columns: repeat(5, 1fr); gap: 6px; margin-top: 12px; }
+    .tools li { font-size: .62rem; padding: 7px 2px 6px; }
+    .tools svg { width: 20px; height: 20px; margin-bottom: 4px; }
+    .tools li:nth-child(n+11) { display: none; }
+    .t-title b { font-size: 6vw; } .t-title span { font-size: 2vw; }
+    .tile .big { font-size: 5vw; } .tile .small, .tile .lbl, .tile .chips i, .tile .flow-mini { font-size: 2vw; }
+    .scene { height: 210vh; }
+    .scene .sticky { grid-template-columns: 1fr; gap: 22px; padding: 92px 6vw 0; align-content: center; }
+    .scene ul.points { font-size: .92rem; }
+    .scene ul.points li:nth-child(n+3) { display: none; }
+    .scene .what { margin-bottom: 10px; }
+    .predict { padding: 16px; } .predict .route { font-size: 1.4rem; } .meter { margin-bottom: 8px; } .meter small { display: none; }
+    .flow .tier { padding: 9px 12px; } .flow .tier span, .flow .down, .scene .cap { display: none; }
+    .scene .what { font-size: 1rem; }
+    .card { width: 58px; height: 70px; left: -29px; top: -35px; font-size: .55rem; border-radius: 12px; }
+    .card svg { width: 22px; height: 22px; }
+    .knows { top: 70px; }
+    .knows h2 { font-size: 1.8rem; margin-bottom: 12px; }
+    .knows ul { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .knows li { padding: 10px 11px 11px; border-radius: 12px; }
+    .knows li b { font-size: .98rem; } .knows li span { font-size: .72rem; line-height: 1.35; }
+    #experience .inner { grid-template-columns: 1fr; gap: 24px; }
+  }
+  @media (max-width: 480px) { .timeline li { grid-template-columns: 1fr; } .timeline .when { text-align: left; } }
+  @media (prefers-reduced-motion: reduce) { .ticker .row { animation: none; } .hint i { animation: none; } }
+</style>
+</head>
+<body>
+
+<div id="liquid" aria-hidden="true"><canvas id="liquidCanvas"></canvas></div>
+<div id="wash" aria-hidden="true"></div>
+
+<a class="sig" href="#hero" aria-label="Caio Bandeira, back to top"><b>Caio Bandeira</b><span>Data &amp; BI Analyst</span></a>
+
+<main>
+  <!-- 1. Portrait, then About -->
+  <section id="hero" aria-label="Introduction">
+    <div class="sticky">
+      <div class="frame" id="frame" tabindex="0" aria-label="Portrait of Caio Bandeira. Press Enter to switch to the robot version.">
+        <img id="baseImg" src="img/caio-base.webp" alt="Portrait of Caio Bandeira">
+        <img id="robotImg" src="img/caio-robot.webp" alt="" aria-hidden="true">
+        <canvas id="view" aria-hidden="true"></canvas>
+        <div class="ring" id="ring"></div>
+      </div>
+      <p class="headline l" id="hl1">Your next</p>
+      <p class="headline r" id="hl2"><em>data analyst.</em></p>
+      <div class="hint" id="hint"><span>Scroll</span><i></i></div>
+
+      <div class="about" id="about">
+        <p class="eyebrow">About</p>
+        <h2>Data that turns into decisions.</h2>
+        <p>Data and BI analyst with 3+ years turning business, product and public data into dashboards, KPIs and clear recommendations. Strong SQL (CTEs, window functions, BigQuery, PostgreSQL) and Python (pandas, NumPy).</p>
+        <p class="more-sm">Experienced in funnel and conversion analysis, A/B testing, forecasting and data-quality checks. I use AI tools daily to write and review queries and automate reports, and I'm used to presenting findings to non-technical stakeholders.</p>
+        <ul class="stats"><li><b>3+ years</b>in data and BI</li><li><b>20 GB</b>modeled for one API</li><li><b>27</b>deputies served daily by an AI report</li></ul>
+        <ul class="tools" id="tools" aria-label="Tools I use"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Skills ticker -->
+  <section class="ticker" aria-label="Skills">
+    <div class="row" id="tick1"></div>
+    <div class="row rev" id="tick2"></div>
+  </section>
+
+  <!-- 3. Projects zoom -->
+  <section id="zoom" aria-label="Projects">
+    <div class="sticky">
+      <div class="zl"><div class="tile t-title"><b>Projects</b><span>Two systems built on public data</span></div></div>
+      <div class="zl"><div class="tile pic"><img src="img/mandato.webp" alt="Mandato365 home page"></div></div>
+      <div class="zl"><div class="tile pic"><img src="img/airport.webp" alt="Airport terminal with a plane taking off"></div></div>
+      <div class="zl"><div class="tile pic"><img src="img/dashboard.webp" alt="Analytics dashboard"></div></div>
+      <div class="zl"><div class="tile pic"><img src="img/data.webp" alt="Data pipeline and code"></div></div>
+      <div class="zl"><div class="tile pic"><svg class="net" viewBox="0 0 600 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="600" height="500" fill="#142A52"/><g fill="none" stroke="#86C5FF" stroke-width=".8" opacity=".38"><path d="M373.0 400.5 Q371.1 401.4 370.1 403.1"/><path d="M373.0 400.5 Q368.8 396.2 363.0 394.9"/><path d="M373.0 400.5 Q398.8 404.5 422.6 393.6"/><path d="M373.0 400.5 Q377.0 347.3 351.2 300.7"/><path d="M373.0 400.5 Q399.2 381.0 410.5 350.2"/><path d="M373.0 400.5 Q454.8 349.4 495.1 261.6"/><path d="M373.0 400.5 Q489.9 325.5 546.2 198.5"/><path d="M373.0 400.5 Q471.4 288.7 492.0 141.1"/><path d="M373.0 400.5 Q324.7 433.2 302.4 487.1"/><path d="M373.0 400.5 Q348.5 408.3 332.4 428.2"/><path d="M373.0 400.5 Q349.0 423.8 341.8 456.4"/><path d="M373.0 400.5 Q311.5 235.3 169.3 131.3"/><path d="M373.0 400.5 Q365.8 349.4 331.7 310.7"/><path d="M373.0 400.5 Q316.0 327.4 228.2 297.8"/><path d="M373.0 400.5 Q480.6 332.6 533.1 216.7"/><path d="M373.0 400.5 Q430.9 267.9 406.4 125.4"/><path d="M373.0 400.5 Q384.8 309.5 344.6 227.0"/><path d="M373.0 400.5 Q271.4 264.1 111.5 206.2"/><path d="M373.0 400.5 Q239.1 262.8 51.5 221.5"/><path d="M373.0 400.5 Q318.3 195.0 159.7 53.6"/><path d="M373.0 400.5 Q491.6 318.9 545.8 185.6"/><path d="M373.0 400.5 Q338.2 389.3 303.0 399.2"/><path d="M373.0 400.5 Q368.8 366.5 346.6 340.4"/><path d="M373.0 400.5 Q352.1 243.1 248.2 123.1"/><path d="M351.2 300.7 Q347.1 353.8 373.0 400.5"/><path d="M351.2 300.7 Q345.3 354.7 370.1 403.1"/><path d="M351.2 300.7 Q372.5 357.0 421.2 392.3"/><path d="M351.2 300.7 Q373.0 357.9 422.6 393.6"/><path d="M351.2 300.7 Q429.0 302.7 495.1 261.6"/><path d="M351.2 300.7 Q464.0 278.8 546.2 198.5"/><path d="M351.2 300.7 Q322.7 361.6 332.4 428.2"/><path d="M351.2 300.7 Q285.6 188.7 169.3 131.3"/><path d="M351.2 300.7 Q290.1 280.8 228.2 297.8"/><path d="M351.2 300.7 Q399.7 346.8 465.7 358.6"/><path d="M351.2 300.7 Q465.3 262.3 539.5 167.4"/><path d="M351.2 300.7 Q442.3 292.8 514.0 236.1"/><path d="M351.2 300.7 Q405.1 221.3 406.4 125.4"/><path d="M351.2 300.7 Q410.9 240.8 427.7 158.0"/><path d="M351.2 300.7 Q359.1 188.5 303.9 90.5"/><path d="M351.2 300.7 Q312.4 342.7 303.0 399.2"/><path d="M421.2 392.3 Q391.8 384.9 363.0 394.9"/><path d="M421.2 392.3 Q371.5 396.9 332.4 428.2"/><path d="M421.2 392.3 Q334.4 224.0 169.3 131.3"/><path d="M421.2 392.3 Q424.5 239.1 342.8 109.4"/><path d="M421.2 392.3 Q388.7 338.1 331.7 310.7"/><path d="M421.2 392.3 Q340.2 351.2 249.9 361.4"/><path d="M421.2 392.3 Q491.0 328.1 514.0 236.1"/><path d="M421.2 392.3 Q361.1 378.0 303.0 399.2"/><path d="M421.2 392.3 Q391.7 355.1 346.6 340.4"/><path d="M410.5 350.2 Q410.0 373.7 422.6 393.6"/><path d="M410.5 350.2 Q412.7 219.7 342.8 109.4"/><path d="M410.5 350.2 Q479.3 308.7 514.0 236.1"/><path d="M410.5 350.2 Q447.9 256.7 427.7 158.0"/><path d="M410.5 350.2 Q396.0 278.7 344.6 227.0"/><path d="M410.5 350.2 Q282.6 233.3 111.5 206.2"/><path d="M410.5 350.2 Q250.3 232.0 51.5 221.5"/><path d="M410.5 350.2 Q396.1 204.4 303.9 90.5"/><path d="M410.5 350.2 Q502.8 288.2 545.8 185.6"/><path d="M410.5 350.2 Q319.7 366.0 252.6 429.1"/><path d="M410.5 350.2 Q361.0 387.6 340.2 446.0"/><path d="M410.5 350.2 Q380.0 335.7 346.6 340.4"/><path d="M363.0 394.9 Q365.3 400.1 370.1 403.1"/><path d="M363.0 394.9 Q393.5 379.7 410.5 350.2"/><path d="M363.0 394.9 Q342.8 407.0 332.4 428.2"/><path d="M363.0 394.9 Q343.2 422.5 341.8 456.4"/><path d="M363.0 394.9 Q310.2 326.1 228.2 297.8"/><path d="M363.0 394.9 Q311.5 361.2 249.9 361.4"/><path d="M363.0 394.9 Q474.8 331.3 533.1 216.7"/><path d="M363.0 394.9 Q425.2 266.7 406.4 125.4"/><path d="M363.0 394.9 Q485.8 317.7 545.8 185.6"/><path d="M546.2 198.5 Q381.0 306.2 302.4 487.1"/><path d="M546.2 198.5 Q404.9 281.3 332.4 428.2"/><path d="M546.2 198.5 Q493.0 160.5 427.7 158.0"/><path d="M546.2 198.5 Q441.1 182.5 344.6 227.0"/><path d="M546.2 198.5 Q406.1 291.4 340.2 446.0"/><path d="M495.1 261.6 Q409.1 308.5 363.0 394.9"/><path d="M495.1 261.6 Q389.2 336.0 341.8 456.4"/><path d="M495.1 261.6 Q351.7 147.6 169.3 131.3"/><path d="M495.1 261.6 Q441.8 162.7 342.8 109.4"/><path d="M495.1 261.6 Q357.5 274.7 249.9 361.4"/><path d="M495.1 261.6 Q476.9 199.7 427.7 158.0"/><path d="M495.1 261.6 Q425.0 221.8 344.6 227.0"/><path d="M495.1 261.6 Q378.4 301.6 303.0 399.2"/><path d="M302.4 487.1 Q376.5 458.4 422.6 393.6"/><path d="M302.4 487.1 Q293.7 381.3 228.2 297.8"/><path d="M302.4 487.1 Q403.3 447.3 465.7 358.6"/><path d="M302.4 487.1 Q468.9 362.8 539.5 167.4"/><path d="M302.4 487.1 Q445.8 393.3 514.0 236.1"/><path d="M302.4 487.1 Q469.3 372.8 545.8 185.6"/></g><circle cx="373.0" cy="400.5" r="6" fill="#FFA62B"/><text fill="#F8E6A0" font-family="Schibsted Grotesk,Arial" font-size="13" font-weight="600" x="381.0" y="404.5">GRU</text><circle cx="370.1" cy="403.1" r="2.4" fill="#86C5FF"/><circle cx="363.0" cy="394.9" r="4" fill="#FFA62B"/><text fill="#F8E6A0" font-family="Schibsted Grotesk,Arial" font-size="13" font-weight="600" x="371.0" y="398.9">VCP</text><circle cx="421.2" cy="392.3" r="4" fill="#FFA62B"/><text fill="#F8E6A0" font-family="Schibsted Grotesk,Arial" font-size="13" font-weight="600" x="429.2" y="396.3">GIG</text><circle cx="422.6" cy="393.6" r="2.4" fill="#86C5FF"/><circle cx="351.2" cy="300.7" r="6" fill="#FFA62B"/><text fill="#F8E6A0" font-family="Schibsted Grotesk,Arial" font-size="13" font-weight="600" x="359.2" y="304.7">BSB</text><circle cx="410.5" cy="350.2" r="4" fill="#FFA62B"/><text fill="#F8E6A0" font-family="Schibsted Grotesk,Arial" font-size="13" font-weight="600" x="418.5" y="354.2">CNF</text><circle cx="495.1" cy="261.6" r="4" fill="#FFA62B"/><text fill="#F8E6A0" font-family="Schibsted Grotesk,Arial" font-size="13" font-weight="600" x="503.1" y="265.6">SSA</text><circle cx="546.2" cy="198.5" r="4" fill="#FFA62B"/><text fill="#F8E6A0" font-family="Schibsted Grotesk,Arial" font-size="13" font-weight="600" x="554.2" y="202.5">REC</text><circle cx="492.0" cy="141.1" r="2.4" fill="#86C5FF"/><circle cx="302.4" cy="487.1" r="4" fill="#FFA62B"/><text fill="#F8E6A0" font-family="Schibsted Grotesk,Arial" font-size="13" font-weight="600" x="310.4" y="491.1">POA</text><circle cx="332.4" cy="428.2" r="2.4" fill="#86C5FF"/><circle cx="341.8" cy="456.4" r="2.4" fill="#86C5FF"/><circle cx="169.3" cy="131.3" r="2.4" fill="#86C5FF"/><circle cx="342.8" cy="109.4" r="2.4" fill="#86C5FF"/><circle cx="331.7" cy="310.7" r="2.4" fill="#86C5FF"/><circle cx="228.2" cy="297.8" r="2.4" fill="#86C5FF"/><circle cx="249.9" cy="361.4" r="2.4" fill="#86C5FF"/><circle cx="465.7" cy="358.6" r="2.4" fill="#86C5FF"/><circle cx="539.5" cy="167.4" r="2.4" fill="#86C5FF"/><circle cx="533.1" cy="216.7" r="2.4" fill="#86C5FF"/><circle cx="514.0" cy="236.1" r="2.4" fill="#86C5FF"/><circle cx="406.4" cy="125.4" r="2.4" fill="#86C5FF"/><circle cx="427.7" cy="158.0" r="2.4" fill="#86C5FF"/><circle cx="344.6" cy="227.0" r="2.4" fill="#86C5FF"/><circle cx="111.5" cy="206.2" r="2.4" fill="#86C5FF"/><circle cx="51.5" cy="221.5" r="2.4" fill="#86C5FF"/><circle cx="159.7" cy="53.6" r="2.4" fill="#86C5FF"/><circle cx="303.9" cy="90.5" r="2.4" fill="#86C5FF"/><circle cx="545.8" cy="185.6" r="2.4" fill="#86C5FF"/><circle cx="252.6" cy="429.1" r="2.4" fill="#86C5FF"/><circle cx="340.2" cy="446.0" r="2.4" fill="#86C5FF"/><circle cx="303.0" cy="399.2" r="2.4" fill="#86C5FF"/><circle cx="346.6" cy="340.4" r="2.4" fill="#86C5FF"/><circle cx="248.2" cy="123.1" r="2.4" fill="#86C5FF"/><text x="20" y="482" fill="#FFFFFF" opacity=".75" font-family="Schibsted Grotesk,Arial" font-size="13">Domestic routes, ANAC open data</text></svg></div></div>
+      <div class="zl"><div class="tile code" aria-hidden="true"><pre><span class="k">WITH</span> route_load <span class="k">AS</span> (
+  <span class="k">SELECT</span> origin, dest, flight_date,
+         seats_sold / seats_offered <span class="k">AS</span> load
+  <span class="k">FROM</span> anac_flights
+)
+<span class="k">SELECT</span> origin, dest,
+  <span class="f">AVG</span>(load) <span class="k">OVER</span> (
+    <span class="k">PARTITION BY</span> origin, dest
+    <span class="k">ORDER BY</span> flight_date
+    <span class="k">ROWS</span> <span class="n">29</span> <span class="k">PRECEDING</span>
+  ) <span class="k">AS</span> load_30d
+<span class="k">FROM</span> route_load;</pre></div></div>
+    </div>
+  </section>
+
+  <!-- 4a. ANAC -->
+  <section class="scene dark" id="anac" data-wash="1">
+    <div class="sticky">
+      <div class="scene-bg" aria-hidden="true"><img src="img/airport.webp" alt=""></div>
+      <div class="copy">
+        <span class="kicker">Machine learning API <em>Deployed</em></span>
+        <h3>ANAC Flight Intelligence</h3>
+        <p class="what">Four models behind one API, trained on 20 GB of Brazilian civil aviation records.</p>
+        <ul class="points">
+          <li>One request returns airport congestion, seat occupancy, price pressure and excess-baggage risk.</li>
+          <li>Bidirectional LSTM, multi-task FT-Transformer, MLP and a LightGBM + neural network stack.</li>
+          <li>Polars pipeline from raw ANAC CSVs to Parquet feature tables.</li>
+          <li>Monthly drift monitoring, prediction cache and a demo mode that keeps the API up.</li>
+        </ul>
+        <ul class="stack"><li>PyTorch</li><li>LightGBM</li><li>Polars</li><li>FastAPI</li><li>Railway</li></ul>
+        <div class="more"><a href="https://github.com/CaioBandeira7/anac-flight-intelligence-api-main">Source code</a><a href="https://anac-flight-intelligence-api-production.up.railway.app/docs">Try the API</a></div>
+      </div>
+      <figure class="visual" style="margin:0">
+        <div class="predict" role="img" aria-label="Sample API response for a LATAM flight from Guarulhos to Galeão on 15 July 2026: 74% chance of a congested airport, 89% seat occupancy, price pressure 0.64, 3.8% chance of excess baggage.">
+          <div class="req"><div class="route">GRU<span>/</span>GIG</div><div class="meta">LATAM<br>15 Jul 2026</div></div>
+          <div class="meter"><div class="row"><span>Congested airport</span><b>74%</b></div><div class="bar"><i data-w="74"></i></div><small>Bidirectional LSTM</small></div>
+          <div class="meter"><div class="row"><span>Seat occupancy</span><b>89%</b></div><div class="bar"><i data-w="89"></i></div><small>FT-Transformer, flagged as full</small></div>
+          <div class="meter"><div class="row"><span>Price pressure</span><b>0.64</b></div><div class="bar"><i data-w="64"></i></div><small>MLP, premium pricing suggested</small></div>
+          <div class="meter"><div class="row"><span>Excess baggage</span><b>3.8%</b></div><div class="bar"><i data-w="3.8"></i></div><small>LightGBM + NN stack, no fee suggested</small></div>
+        </div>
+        <figcaption class="cap">A sample response from the /prever endpoint.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 4b. Mandato365 -->
+  <section class="scene dark" id="mandato" data-wash="0">
+    <div class="sticky">
+      <div class="scene-bg" aria-hidden="true"><img src="img/camara.webp" alt=""></div>
+      <div class="copy">
+        <span class="kicker">B2G SaaS · Data team lead</span>
+        <h3>Mandato365</h3>
+        <p class="what">A political intelligence platform for Brazilian federal deputies. I led the data team and owned the analytics architecture, metric definitions and data quality.</p>
+        <ul class="points">
+          <li>KPI dashboards and self-serve reports on PostgreSQL and Power BI (DAX) for deputies' teams.</li>
+          <li>ROI of parliamentary budget amendments against votes per polling section (TSE 2022), with normalization and fuzzy matching in SQL.</li>
+          <li>AI reporting in production: a daily media-clipping report with Claude-generated insights, sent by WhatsApp to 27 deputies at 7:30 a.m.</li>
+          <li>Scheduled ETL jobs, row-level security and integrity audits that caught gaps in public-data sources.</li>
+        </ul>
+        <ul class="stack"><li>PostgreSQL</li><li>Power BI</li><li>DAX</li><li>Claude API</li><li>Next.js</li></ul>
+        <div class="more"><a href="https://www.mandato365.com.br/">Visit mandato365.com.br</a><a href="https://github.com/CaioBandeira7/political-intelligence-platform-showcase-main">Case study</a><a href="https://youtu.be/IVAE4H_5Yfo">Demo video</a></div>
+      </div>
+      <figure class="visual" style="margin:0">
+        <div class="flow">
+          <div class="tier"><b>Public data</b><span>TSE, Chamber of Deputies, spending portal, IBGE, news, Instagram, TikTok, X</span></div>
+          <div class="down" aria-hidden="true">↓</div>
+          <div class="tier ai"><b>Processing and AI</b><span>Cross-referencing, sentiment, summaries, speech drafts</span></div>
+          <div class="down" aria-hidden="true">↓</div>
+          <div class="tier app"><b>The product</b><span>Dashboards, electoral maps, reports, WhatsApp assistant</span></div>
+        </div>
+        <figcaption class="cap">How public data became a daily briefing.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 5. Toolkit morph -->
+  <section id="morph" aria-label="What I know">
+    <div class="sticky">
+      <div class="morph-intro" id="morphIntro"><h2>The toolkit</h2><p>Keep scrolling</p></div>
+      <div class="orbit" id="orbit" aria-hidden="true"></div>
+      <div class="knows" id="knows">
+        <h2>What I work with</h2>
+        <ul>
+          <li><b>SQL</b><span>CTEs, window functions, complex joins, query optimization. BigQuery, PostgreSQL, ETL and star-schema modeling.</span></li>
+          <li><b>Analytics</b><span>Funnel and conversion analysis, segmentation, KPI design, A/B testing, regression, time series and forecasting.</span></li>
+          <li><b>BI and visualization</b><span>Power BI (DAX, Power Query), Looker Studio, Tableau, SAS Visual Analytics, advanced Excel and Sheets.</span></li>
+          <li><b>Python and ML</b><span>pandas, NumPy, scikit-learn, LightGBM, PyTorch. Also R and SAS.</span></li>
+          <li><b>AI and automation</b><span>AI tools to write and review SQL, LLM insight generation (Claude API), prompt engineering, RAG, UiPath.</span></li>
+          <li><b>Engineering</b><span>FastAPI, Git, Docker, Next.js, scheduled jobs and data-quality audits.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Experience -->
+  <section id="experience" aria-label="Experience">
+    <div class="inner">
+      <h2 class="reveal">Experience</h2>
+      <div>
+        <ol class="timeline">
+          <li class="reveal"><div><h3>Data Intelligence Intern</h3><span class="org">PPN Tecnologia</span></div><span class="when">2026 to now</span><p>Data processing, analysis and modeling in SAS, with SAS Visual Analytics dashboards. Automated report consolidation and recurring workflows with UiPath, including human-in-the-loop approvals.</p></li>
+          <li class="reveal"><div><h3>Data Team Lead</h3><span class="org">Mandato365 (Atlas Dados e Tecnologia)</span></div><span class="when">2025 to 2026</span><p>Led the data team of a B2G SaaS for federal deputies: analytics architecture, metric definitions, KPI dashboards, SQL pipelines and AI-generated daily reports.</p></li>
+          <li class="reveal"><div><h3>Freelance Data Scientist</h3><span class="org">HOB Jardim Botânico</span></div><span class="when">2025</span><p>Conversion-funnel and drop-off analysis, lead-scoring models, and audience segmentation for marketing campaigns.</p></li>
+          <li class="reveal"><div><h3>Parliamentary Secretary</h3><span class="org">Brazilian Chamber of Deputies</span></div><span class="when">2023 to 2024</span><p>Analyzed bills, roll-call votes and attendance with SQL and Excel; statistical analysis in R; management reports for non-technical decision-makers.</p></li>
+          <li class="reveal"><div><h3>Intern</h3><span class="org">Federal District Court of Justice (TJDFT)</span></div><span class="when">2022 to 2023</span></li>
+        </ol>
+        <p class="sub reveal">Education</p>
+        <ol class="timeline">
+          <li class="reveal"><div><h3>BSc Data Science and Machine Learning</h3><span class="org">UniCEUB</span></div><span class="when">Expected 2027</span></li>
+          <li class="reveal"><div><h3>LL.B. in Law</h3><span class="org">UniCEUB</span></div><span class="when">Completed</span></li>
+        </ol>
+        <p class="sub reveal">Certifications</p>
+        <p class="reveal" style="margin:0;max-width:64ch">IBM Data Science Professional Certificate, Databases and SQL for Data Science (IBM), Data Analysis with Python (IBM), Generative AI (IBM), Power BI (Microsoft). In progress: PL-300 and UiPath.</p>
+        <p class="sub reveal">Languages</p>
+        <p class="reveal" style="margin:0">Portuguese (native), English (fluent), Spanish (intermediate)</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Contact -->
+  <section id="contact" data-wash="gelato" aria-label="Contact">
+    <div class="inner">
+      <h2 class="reveal">Let's talk</h2>
+      <p class="reveal">I'm looking for data science and machine learning roles, remote or in Brasília. The fastest way to reach me is LinkedIn.</p>
+      <ul class="links reveal">
+        <li><a class="btn primary" href="https://www.linkedin.com/in/caio-bandeira-cv">Message me on LinkedIn</a></li>
+        <li><a class="btn" href="https://github.com/CaioBandeira7">GitHub</a></li>
+      </ul>
+    </div>
+  </section>
+</main>
+<footer>Caio Bandeira, Brasília, Brazil.</footer>
+
+<script src="lib/icons.js"></script>
+<script src="lib/gsap.min.js"></script>
+<script src="lib/ScrollTrigger.min.js"></script>
+<script src="lib/lenis.min.js"></script>
+<script>
+var REDUCE = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+var MOBILE = window.matchMedia("(max-width: 860px)").matches;
+function svgIcon(i) { return '<svg viewBox="0 0 24 24" aria-hidden="true">' + i.svg + '</svg>'; }
+function iconById(id) { for (var k = 0; k < ICONS.length; k++) if (ICONS[k].id === id) return ICONS[k]; }
+
+/* ---------- Fill tool grid, ticker and morph cards from one list ---------- */
+(function () {
+  var aboutIds = ["sql", "bigquery", "postgresql", "python", "pandas", "numpy", "powerbi", "tableau", "looker", "sas", "uipath", "sklearn"];
+  document.getElementById("tools").innerHTML = aboutIds.map(function (id) { var i = iconById(id); return "<li>" + svgIcon(i) + i.name + "</li>"; }).join("");
+  var chips = ICONS.map(function (i) { return '<span class="chip">' + svgIcon(i) + i.name + "</span>"; }).join("");
+  document.getElementById("tick1").innerHTML = chips + chips;
+  var rev = ICONS.slice().reverse().map(function (i) { return '<span class="chip">' + svgIcon(i) + i.name + "</span>"; }).join("");
+  document.getElementById("tick2").innerHTML = rev + rev;
+  document.getElementById("orbit").innerHTML = ICONS.map(function (i) { return '<div class="card">' + svgIcon(i) + "<span>" + i.name + "</span></div>"; }).join("");
+
+
+})();
+
+/* ---------- Liquid background (WebGL, light palette) ---------- */
+(function () {
+  var COLORS = { paper: "#FFF9EC", sea: "#D3E9FF", gelato: "#FBEDBB", citrus: "#FFD9A3", shine: "#FFFFFF" };
+  var canvas = document.getElementById("liquidCanvas");
+  var gl = canvas.getContext("webgl", { alpha: false, antialias: false, depth: false, stencil: false });
+  if (!gl) { document.getElementById("liquid").style.background = "linear-gradient(135deg,#FFF9EC,#D3E9FF 55%,#FBEDBB)"; return; }
+  var vs = "attribute vec2 a;varying vec2 v;void main(){v=a*0.5+0.5;gl_Position=vec4(a,0.0,1.0);}";
+  var fs = "precision highp float;varying vec2 v;uniform vec2 r;uniform vec2 m;uniform float ms;uniform float t;uniform vec3 c0;uniform vec3 c1;uniform vec3 c2;uniform vec3 c3;uniform vec3 c4;" +
+    "float h(vec2 p){p=fract(p*vec2(123.34,345.45));p+=dot(p,p+34.345);return fract(p.x*p.y);}" +
+    "float n(vec2 p){vec2 i=floor(p);vec2 f=fract(p);vec2 u=f*f*(3.0-2.0*f);return mix(mix(h(i),h(i+vec2(1.0,0.0)),u.x),mix(h(i+vec2(0.0,1.0)),h(i+1.0),u.x),u.y);}" +
+    "float fb(vec2 p){float x=0.0;float w=0.52;mat2 R=mat2(0.8,-0.6,0.6,0.8);for(int o=0;o<4;o++){x+=n(p)*w;p=R*p*2.03+17.17;w*=0.5;}return x;}" +
+    "float F(vec2 p,float T){vec2 d=vec2(T*0.045,-T*0.032);vec2 a=vec2(fb(p*0.72+d),fb(p*0.76+vec2(5.2,1.3)-d.yx));vec2 b=vec2(fb(p*0.78+a*2.7+vec2(1.7,9.2)+d*1.3),fb(p*0.74+a*2.5+vec2(8.3,2.8)-d*1.1));return fb(p*0.68+b*1.65);}" +
+    "void main(){float as=r.x/max(r.y,1.0);vec2 p=(v-0.5)*vec2(as,1.0);vec2 q=(m-0.5)*vec2(as,1.0);vec2 dl=p-q;float fa=exp(-dot(dl,dl)*2.6);p+=(dl/max(length(dl),0.001))*fa*0.1*ms;" +
+    "float f=F(p,t);vec3 c=mix(c0,c1,smoothstep(0.2,0.46,f));c=mix(c,c2,smoothstep(0.4,0.62,f)*0.9);c=mix(c,c3,smoothstep(0.58,0.74,f)*0.55);c=mix(c,c4,smoothstep(0.66,0.84,f)*0.85);" +
+    "c+=(h(gl_FragCoord.xy+floor(t*12.0))-0.5)*0.006;gl_FragColor=vec4(clamp(c,0.0,1.0),1.0);}";
+  function sh(ty, src) { var x = gl.createShader(ty); gl.shaderSource(x, src); gl.compileShader(x); return gl.getShaderParameter(x, gl.COMPILE_STATUS) ? x : null; }
+  var a = sh(gl.VERTEX_SHADER, vs), b = sh(gl.FRAGMENT_SHADER, fs); if (!a || !b) return;
+  var pr = gl.createProgram(); gl.attachShader(pr, a); gl.attachShader(pr, b); gl.linkProgram(pr); gl.useProgram(pr);
+  var buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,3,-1,-1,3]), gl.STATIC_DRAW);
+  var loc = gl.getAttribLocation(pr, "a"); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+  function U(x) { return gl.getUniformLocation(pr, x); }
+  function hex(s) { return [parseInt(s.slice(1,3),16)/255, parseInt(s.slice(3,5),16)/255, parseInt(s.slice(5,7),16)/255]; }
+  ["c0","c1","c2","c3","c4"].forEach(function (k, i) { gl.uniform3fv(U(k), hex([COLORS.paper, COLORS.sea, COLORS.gelato, COLORS.citrus, COLORS.shine][i])); });
+  var uR = U("r"), uM = U("m"), uS = U("ms"), uT = U("t");
+  var P = { x: .5, y: .5, cx: .5, cy: .5, s: 0, cs: 0 }, el = 7, last = performance.now();
+  window.addEventListener("pointermove", function (e) { P.x = e.clientX / innerWidth; P.y = 1 - e.clientY / innerHeight; P.s = 1; });
+  document.addEventListener("pointerleave", function () { P.s = 0; });
+  function draw(ts) {
+    var dt = Math.min(Math.max((ts - last) / 1000, 0), .05); last = ts;
+    if (!REDUCE) el += dt * .55;
+    var k = 1 - Math.exp(-dt * 8); P.cx += (P.x - P.cx) * k; P.cy += (P.y - P.cy) * k; P.cs += ((REDUCE ? 0 : P.s) - P.cs) * k;
+    var d = MOBILE ? 0.5 : Math.min(devicePixelRatio || 1, 1.25), w = Math.round(innerWidth * d), hh = Math.round(innerHeight * d);
+    if (canvas.width !== w || canvas.height !== hh) { canvas.width = w; canvas.height = hh; gl.viewport(0, 0, w, hh); }
+    gl.uniform2f(uR, w, hh); gl.uniform2f(uM, P.cx, P.cy); gl.uniform1f(uS, P.cs); gl.uniform1f(uT, el);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    if (!REDUCE && !document.hidden) requestAnimationFrame(draw);
+  }
+  document.addEventListener("visibilitychange", function () { if (!document.hidden && !REDUCE) { last = performance.now(); requestAnimationFrame(draw); } });
+  requestAnimationFrame(draw);
+})();
+
+/* ---------- Portrait reveal: person to machine under the cursor ---------- */
+(function () {
+  var C = { radius: .17, softness: .45, trailFade: .07, follow: .22, ox: -.6, oy: 2.6, sc: 1 };
+  var frame = document.getElementById("frame"), view = document.getElementById("view"), ring = document.getElementById("ring");
+  var baseEl = document.getElementById("baseImg"), robotEl = document.getElementById("robotImg");
+  var ctx = view.getContext("2d"), mask = document.createElement("canvas"), mctx = mask.getContext("2d"), layer = document.createElement("canvas"), lctx = layer.getContext("2d");
+  var idle = 0, W = 0, H = 0, base, robot, target = { x: -9999, y: -9999 }, pos = { x: -9999, y: -9999 }, last = null, inside = false, full = 0, fullT = 0, sweep = null, running = true;
+  function load(img) { return new Promise(function (res) { function ok() { (img.decode ? img.decode() : Promise.resolve()).then(function () { res(img); }, function () { res(img); }); } if (img.complete && img.naturalWidth) ok(); else img.addEventListener("load", ok, { once: true }); }); }
+  function resize() { var d = Math.min(devicePixelRatio || 1, MOBILE ? 1.5 : 2); W = Math.round(frame.offsetWidth * d); H = Math.round(frame.offsetHeight * d); [view, mask, layer].forEach(function (c) { c.width = W; c.height = H; }); }
+  function fit(c, img, ox, oy, sc) { var s = Math.min(W / img.naturalWidth, H / img.naturalHeight) * (sc || 1), w = img.naturalWidth * s, h = img.naturalHeight * s; c.drawImage(img, (W - w) / 2 + (ox || 0) * W / 100, (H - h) + (oy || 0) * W / 100, w, h); }
+  function stamp(x, y, r) { var g = mctx.createRadialGradient(x, y, r * (1 - C.softness), x, y, r); g.addColorStop(0, "rgba(0,0,0,1)"); g.addColorStop(1, "rgba(0,0,0,0)"); mctx.fillStyle = g; mctx.beginPath(); mctx.arc(x, y, r, 0, 6.2832); mctx.fill(); }
+  function frameLoop(t) {
+    if (!running) { requestAnimationFrame(frameLoop); return; }
+    var r = C.radius * W;
+    if (sweep) { var k = (t - sweep.start) / sweep.dur; if (k >= 1) { sweep = null; if (!inside) target.x = target.y = -9999; } else { target.x = W * (.3 + .4 * k); target.y = H * (.36 + .05 * Math.sin(k * 6.2832)); if (pos.x < -999) { pos.x = target.x; pos.y = target.y; } } }
+    if (target.x > -999) { pos.x += (target.x - pos.x) * C.follow; pos.y += (target.y - pos.y) * C.follow; }
+    mctx.globalCompositeOperation = "destination-out"; mctx.fillStyle = "rgba(0,0,0," + C.trailFade + ")"; mctx.fillRect(0, 0, W, H); mctx.globalCompositeOperation = "source-over";
+    if ((inside || sweep) && pos.x > -999) { if (last) { var dx = pos.x - last.x, dy = pos.y - last.y, n = Math.max(1, Math.ceil(Math.hypot(dx, dy) / (r * .25))); for (var i = 1; i <= n; i++) stamp(last.x + dx * i / n, last.y + dy * i / n, r); } else stamp(pos.x, pos.y, r); last = { x: pos.x, y: pos.y }; idle = 0; } else { last = null; if (++idle > 90 && fullT === 0) mctx.clearRect(0, 0, W, H); }
+    full += (fullT - full) * .12; if (full > .001) { mctx.fillStyle = "rgba(0,0,0," + full.toFixed(3) + ")"; mctx.fillRect(0, 0, W, H); }
+    ctx.clearRect(0, 0, W, H); fit(ctx, base);
+    lctx.globalCompositeOperation = "source-over"; lctx.clearRect(0, 0, W, H); fit(lctx, robot, C.ox, C.oy, C.sc);
+    lctx.globalCompositeOperation = "destination-in"; lctx.drawImage(mask, 0, 0); ctx.drawImage(layer, 0, 0);
+    requestAnimationFrame(frameLoop);
+  }
+  // The frame is scaled by the scroll animation, so map screen coords through its real size
+  function local(e) { var b = frame.getBoundingClientRect(); return { x: (e.clientX - b.left) * W / b.width, y: (e.clientY - b.top) * H / b.height, cx: (e.clientX - b.left) * frame.offsetWidth / b.width, cy: (e.clientY - b.top) * frame.offsetHeight / b.height }; }
+  frame.addEventListener("pointermove", function (e) { var p = local(e); inside = true; sweep = null; target.x = p.x; target.y = p.y; if (pos.x < -999) { pos.x = p.x; pos.y = p.y; } ring.style.transform = "translate(" + p.cx + "px," + p.cy + "px)"; });
+  frame.addEventListener("pointerleave", function () { inside = false; });
+  frame.addEventListener("pointerdown", function (e) { if (e.pointerType !== "mouse") inside = true; });
+  var downAt = null;
+  frame.addEventListener("pointerdown", function (e) { downAt = { x: e.clientX, y: e.clientY, t: Date.now() }; });
+  frame.addEventListener("pointerup", function (e) { if (e.pointerType !== "mouse") { inside = false; if (downAt && Math.hypot(e.clientX - downAt.x, e.clientY - downAt.y) < 10 && Date.now() - downAt.t < 350) { fullT = fullT ? 0 : 1; } } });
+  frame.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); fullT = fullT ? 0 : 1; if (REDUCE) full = fullT; } });
+  new IntersectionObserver(function (en) { running = en[0].isIntersecting; }).observe(frame);
+  Promise.all([load(baseEl), load(robotEl)]).then(function (im) {
+    base = im[0]; robot = im[1]; resize(); frame.classList.add("ready"); addEventListener("resize", resize);
+    if (!REDUCE) setTimeout(function () { sweep = { start: performance.now(), dur: 1600 }; }, 700);
+    requestAnimationFrame(frameLoop);
+  });
+})();
+
+/* ---------- Scroll choreography ---------- */
+(function () {
+  gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.config({ ignoreMobileResize: true });
+
+  // Smooth scroll (skipped for reduced motion)
+  if (!REDUCE && window.Lenis) {
+    var lenis = new Lenis({ lerp: 0.085, smoothWheel: true, syncTouch: false });
+    lenis.on("scroll", ScrollTrigger.update);
+    gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
+    gsap.ticker.lagSmoothing(0);
+    document.querySelectorAll('a[href^="#"]').forEach(function (a) { a.addEventListener("click", function (e) { var t = document.querySelector(a.getAttribute("href")); if (t) { e.preventDefault(); lenis.scrollTo(t); } }); });
+  }
+
+  // 1. Frame shrinks to the side, About comes in
+  var heroTl = gsap.timeline({ scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom bottom", scrub: true, invalidateOnRefresh: true } });
+  heroTl.to("#hint", { opacity: 0, duration: .1 }, 0)
+        .to("#hl1", { x: "-12vw", autoAlpha: 0, ease: "none", duration: .22 }, 0)
+        .to("#hl2", { x: "12vw", autoAlpha: 0, ease: "none", duration: .22 }, 0)
+        .to("#frame", MOBILE
+          ? { y: function () { var f = document.getElementById("frame"); return 64 - (innerHeight - f.offsetHeight); }, scale: .42, ease: "none", duration: .55 }
+          : { x: "-25vw", y: "-4vh", scale: .72, ease: "none", duration: .55 }, 0)
+        .fromTo("#about", { autoAlpha: 0, y: MOBILE ? 40 : 0, x: MOBILE ? 0 : 60 }, { autoAlpha: 1, y: 0, x: 0, ease: "power2.out", duration: .35 }, .3)
+        .fromTo("#tools li", { opacity: 0, y: 14 }, { opacity: 1, y: 0, stagger: .015, duration: .2 }, .45)
+        .to({}, { duration: .25 });
+
+  // 2. Projects: tiles zoom until the title tile fills the screen
+  var scales = [4, 5, 6, 5, 6, 8, 9];
+  gsap.utils.toArray("#zoom .zl").forEach(function (layer, i) {
+    gsap.fromTo(layer, { scale: 1 }, { scale: scales[i], ease: "none", scrollTrigger: { trigger: "#zoom", start: "top top", end: "bottom bottom", scrub: true } });
+  });
+
+  // Colour wash: blue for ANAC, back to the liquid for Mandato365, cream for contact
+  var wash = document.getElementById("wash");
+  function setWash(color, op) { gsap.to(wash, { backgroundColor: color, opacity: op, duration: .6, ease: "power2.out", overwrite: true });  }
+  ScrollTrigger.create({ trigger: "#zoom", start: "bottom 60%", endTrigger: "#anac", end: "bottom 60%", onEnter: function () { setWash("#2E5AA7", 1); }, onEnterBack: function () { setWash("#2E5AA7", 1); }, onLeave: function () { setWash("#2E5AA7", 0); }, onLeaveBack: function () { setWash("#2E5AA7", 0); } });
+  ScrollTrigger.create({ trigger: "#contact", start: "top 60%", onEnter: function () { setWash("#F8E6A0", 1); }, onLeaveBack: function () { setWash("#F8E6A0", 0); } });
+
+  ["#anac", "#mandato"].forEach(function (id) { ScrollTrigger.create({ trigger: id, start: "top 40px", end: "bottom 40px", onToggle: function (st) { document.body.classList.toggle("on-dark", st.isActive); } }); });
+
+  // 3. Project scenes: copy lines and visual build in as you scroll
+  gsap.utils.toArray(".scene").forEach(function (sc) {
+    var tl = gsap.timeline({ scrollTrigger: { trigger: sc, start: "top 70%", end: "center center", scrub: true } });
+    tl.to(sc.querySelectorAll(".copy > *"), { opacity: 1, y: 0, stagger: .12, ease: "power2.out" }, 0)
+      .to(sc.querySelector(".visual"), { opacity: 1, scale: 1, ease: "power2.out" }, .1);
+    sc.querySelectorAll(".bar i").forEach(function (b, i) { tl.to(b, { width: b.dataset.w + "%", ease: "power2.out" }, .3 + i * .08); });
+    var bgi = sc.querySelector(".scene-bg img"); if (bgi) gsap.fromTo(bgi, { yPercent: -6 }, { yPercent: 6, ease: "none", scrollTrigger: { trigger: sc, start: "top bottom", end: "bottom top", scrub: true } });
+    gsap.to(sc.querySelector(".sticky"), { opacity: 0, y: -40, ease: "none", scrollTrigger: { trigger: sc, start: "bottom 90%", end: "bottom 30%", scrub: true } });
+  });
+
+  // 4. Toolkit morph: scatter, line, circle, spin, arc, then the bullets
+  var cards = gsap.utils.toArray("#orbit .card"), N = cards.length;
+  var scatter = cards.map(function () { return { x: (Math.random() - .5) * innerWidth * 1.1, y: (Math.random() - .5) * innerHeight * 1.1, r: (Math.random() - .5) * 160 }; });
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function ease(t) { return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+  function seg(p, a, b) { return ease(Math.min(Math.max((p - a) / (b - a), 0), 1)); }
+  var prog = 0, shown = 0;
+  function layout(p) {
+    var W = innerWidth, H = innerHeight, gap = MOBILE ? 64 : 86;
+    var R = Math.min(W, H) * (MOBILE ? .38 : .36);
+    var arcR = Math.max(W, H) * (MOBILE ? 1.5 : 1.15), apex = H * (MOBILE ? .36 : .2), spread = MOBILE ? 70 : 100;
+    var t1 = seg(p, .02, .18), t2 = seg(p, .2, .36), spin = seg(p, .36, .58) * 120, t3 = seg(p, .6, .76), slide = seg(p, .76, 1);
+    cards.forEach(function (c, i) {
+      var s = scatter[i];
+      var lx = (i - (N - 1) / 2) * gap * (MOBILE ? .55 : .9), ly = 0;
+      var ca = i / N * 360 + spin, cr = ca * Math.PI / 180, cx = Math.cos(cr) * R, cy = Math.sin(cr) * R;
+      var aa = -90 - spread / 2 + i * spread / (N - 1) + (slide - .5) * -spread * .5, ar = aa * Math.PI / 180;
+      var ax = Math.cos(ar) * arcR, ay = Math.sin(ar) * arcR + apex + arcR;
+      var x = lerp(s.x, lx, t1), y = lerp(s.y, ly, t1), rot = lerp(s.r, 0, t1);
+      x = lerp(x, cx, t2); y = lerp(y, cy, t2); rot = lerp(rot, ca + 90, t2);
+      x = lerp(x, ax, t3); y = lerp(y, ay, t3); rot = lerp(rot, aa + 90, t3);
+      var sc = lerp(1, MOBILE ? 1 : 1.15, t3);
+      c.style.transform = "translate(" + x.toFixed(1) + "px," + y.toFixed(1) + "px) rotate(" + rot.toFixed(1) + "deg) scale(" + sc + ")";
+      c.style.opacity = Math.min(1, .15 + t1 * 1.2).toFixed(2);
+    });
+    document.getElementById("morphIntro").style.opacity = (seg(p, .22, .34) * (1 - seg(p, .52, .62))).toFixed(2);
+    var k = seg(p, .68, .82); var kn = document.getElementById("knows"); kn.style.opacity = k.toFixed(2); kn.style.transform = "translate(-50%," + ((1 - k) * 30).toFixed(1) + "px)";
+  }
+  ScrollTrigger.create({ trigger: "#morph", start: "top top", end: "bottom bottom", onUpdate: function (st) { prog = st.progress; } });
+  var morphOn = false;
+  ScrollTrigger.create({ trigger: "#morph", start: "top bottom", end: "bottom top", onToggle: function (st) { morphOn = st.isActive; } });
+  (function tick() { if (morphOn || Math.abs(prog - shown) > .001) { shown += (prog - shown) * (REDUCE ? 1 : .12); layout(shown); } requestAnimationFrame(tick); })();
+  layout(0);
+  addEventListener("resize", function () { layout(shown); });
+
+  // 5. Simple reveals for experience and contact
+  gsap.utils.toArray(".reveal").forEach(function (el) {
+    gsap.to(el, { opacity: 1, y: 0, duration: .9, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 88%" } });
+  });
+})();
+</script>
+</body>
+</html>
