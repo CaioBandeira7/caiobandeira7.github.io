@@ -196,12 +196,15 @@
   .morph-intro p { margin: 0; color: var(--muted); }
   .knows { position: absolute; left: 50%; top: 8vh; transform: translateX(-50%); width: min(94vw, 1240px); opacity: 0; }
   .knows h2 { font: 800 clamp(2.4rem, 4.6vw, 4rem)/1 var(--display); letter-spacing: -0.04em; margin: 0 0 28px; text-align: center; }
-  .knows ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .knows ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
   .knows li { background: rgba(255,255,255,.72); border-radius: 18px; padding: 20px 22px 22px; border-top: 4px solid var(--sea); }
-  .knows li:nth-child(3n+2) { border-top-color: var(--citrus); }
-  .knows li:nth-child(3n) { border-top-color: var(--amalfi); }
+  .knows li:nth-child(4n+2), .knows li:nth-child(4n+4) { border-top-color: var(--citrus); }
+  .knows li:nth-child(4n+3) { border-top-color: var(--amalfi); }
   .knows li b { display: block; font: 700 clamp(1.25rem, 1.9vw, 1.6rem)/1.15 var(--display); letter-spacing: -0.02em; margin-bottom: 6px; }
   .knows li span { color: var(--muted); font-size: clamp(.95rem, 1.15vw, 1.08rem); line-height: 1.45; }
+  .knows li { padding: 16px 18px 18px; background: rgba(255,255,255,.96); box-shadow: 0 18px 40px -30px rgba(20,42,82,.45); }
+  .knows { z-index: 2; }
+  .knows li span { font-size: clamp(.85rem, .95vw, .98rem); line-height: 1.4; }
 
   /* ---------- 6. Experience ---------- */
   #experience { padding: 14vh 7vw 16vh; }
@@ -263,7 +266,8 @@
     .knows h2 { font-size: 1.8rem; margin-bottom: 12px; }
     .knows ul { grid-template-columns: 1fr 1fr; gap: 8px; }
     .knows li { padding: 10px 11px 11px; border-radius: 12px; }
-    .knows li b { font-size: .98rem; } .knows li span { font-size: .72rem; line-height: 1.35; }
+    .knows li b { font-size: .9rem; } .knows li span { font-size: .66rem; line-height: 1.3; }
+    .knows li:nth-child(n+7) { display: none; }
     #experience .inner { grid-template-columns: 1fr; gap: 24px; }
   }
   @media (max-width: 480px) { .timeline li { grid-template-columns: 1fr; } .timeline .when { text-align: left; } }
@@ -465,12 +469,14 @@
       <div class="knows" id="knows">
         <h2>What I work with</h2>
         <ul>
-          <li><b>SQL</b><span>CTEs, window functions, complex joins, query optimization. BigQuery, PostgreSQL, ETL and star-schema modeling.</span></li>
-          <li><b>Analytics and statistics</b><span>Funnel and conversion analysis, segmentation, KPI design, A/B testing, regression, time series, temporal validation and bootstrap confidence intervals.</span></li>
-          <li><b>BI and visualization</b><span>Power BI (DAX, Power Query), SAS Viya and Visual Analytics (CAS), Looker Studio, Tableau, advanced Excel and Sheets.</span></li>
-          <li><b>Python and ML</b><span>pandas, Polars, DuckDB, NumPy, scikit-learn, LightGBM, PyTorch. Also R and SAS.</span></li>
-          <li><b>AI and automation</b><span>LLM apps (Claude API, Groq tool calling), local models with Ollama, speech-to-text with Faster-Whisper, prompt engineering, RAG, UiPath.</span></li>
-          <li><b>Engineering</b><span>FastAPI, Git, Docker, Next.js, scheduled jobs and data-quality audits.</span></li>
+          <li><b>SQL and databases</b><span>CTEs, window functions, query optimization. PostgreSQL, SQL Server, BigQuery, SAS Viya and CAS, Microsoft Fabric. ETL/ELT, star and snowflake schemas.</span></li>
+          <li><b>Python and data engineering</b><span>pandas, Polars, DuckDB, NumPy, Parquet pipelines, data-quality audits and fuzzy matching. Also R, SAS and DAX.</span></li>
+          <li><b>ML and statistics</b><span>scikit-learn, LightGBM, PyTorch. Regression, classification, gradient boosting, time series, temporal validation, bootstrap, inference, A/B tests, MLflow, drift monitoring.</span></li>
+          <li><b>AI and LLMs</b><span>Claude API, Groq, Ollama (Llama 3.2). Structured output, tool calling, RAG with embeddings (ChromaDB, FAISS), guardrails, response evaluation, agents with LangChain and LangGraph. Faster-Whisper, WebRTC VAD, Claude Code.</span></li>
+          <li><b>BI and visualization</b><span>Power BI (DAX, Power Query, RLS, Service, scheduled refresh), SAS Visual Analytics, Tableau, Looker Studio, SSRS, advanced Excel and Sheets.</span></li>
+          <li><b>Engineering and deploy</b><span>FastAPI, REST APIs, Next.js (React), JavaScript, TypeScript, HTML/CSS, Docker, Vercel, Render, Railway, GitHub Pages, Git. Cloud: GCP, Azure, AWS.</span></li>
+          <li><b>Automation</b><span>UiPath (Studio, Orchestrator, queues, Action Center, Dispatcher/Performer, VB.NET expressions), n8n, WhatsApp integrations, Microsoft 365 and SharePoint, Tkinter desktop apps.</span></li>
+          <li><b>Law and privacy</b><span>Law degree (LL.B.), with a working knowledge of data privacy and the LGPD.</span></li>
         </ul>
       </div>
     </div>
