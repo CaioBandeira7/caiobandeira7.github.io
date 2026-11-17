@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Caio Bandeira | Data &amp; BI Analyst</title>
-<meta name="description" content="Caio Bandeira, data and BI analyst in Brasília. Machine-learning systems built on Brazilian public data.">
+<meta name="description" content="Caio Bandeira, data and BI analyst in Brasília. Machine-learning systems, statistical modelling and real-time AI built on public data.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232E5AA7'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Arial' font-weight='700' font-size='15' fill='%23F8E6A0'%3ECB%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -172,6 +172,19 @@
   .flow .tier b { display: block; font: 600 1.1rem var(--display); }
   .flow .tier span { font-size: .92rem; color: var(--muted); }
   .flow .down { text-align: center; color: var(--muted); line-height: 1; }
+  .flow .tier.next { border-left-style: dashed; border-left-color: var(--muted); background: rgba(255,255,255,.7); }
+  .flow .tier.next b::after { content: "Next"; margin-left: 8px; font: 600 .7rem var(--body); padding: 2px 7px; border-radius: 4px; border: 1px solid rgba(20,42,82,.3); color: var(--muted); vertical-align: middle; }
+  .kv { margin: 0; }
+  .kv div { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 11px 0; border-bottom: 1px solid #E4E9F2; }
+  .kv div:last-child { border-bottom: 0; }
+  .kv dt { color: var(--muted); font-size: .92rem; }
+  .kv dd { margin: 0; font: 700 1.25rem/1 var(--display); letter-spacing: -0.01em; white-space: nowrap; }
+  #f1 .scene-bg img { object-position: 55% 55%; }
+  #baya .scene-bg { background: #FFFFFF; }
+  #baya h3 { display: flex; align-items: center; gap: .3em; }
+  #baya .logo-mark { height: .95em; width: auto; }
+  #baya .stack li { background: #E9F1FB; }
+  #baya .scene-bg::after { display: none; }
 
   /* ---------- 5. Toolkit morph ---------- */
   #morph { height: 420vh; }
@@ -242,6 +255,7 @@
     .scene .what { margin-bottom: 10px; }
     .predict { padding: 16px; } .predict .route { font-size: 1.4rem; } .meter { margin-bottom: 8px; } .meter small { display: none; }
     .flow .tier { padding: 9px 12px; } .flow .tier span, .flow .down, .scene .cap { display: none; }
+    .kv div { padding: 7px 0; } .kv dd { font-size: 1rem; }
     .scene .what { font-size: 1rem; }
     .card { width: 58px; height: 70px; left: -29px; top: -35px; font-size: .55rem; border-radius: 12px; }
     .card svg { width: 22px; height: 22px; }
@@ -297,11 +311,11 @@
   <!-- 3. Projects zoom -->
   <section id="zoom" aria-label="Projects">
     <div class="sticky">
-      <div class="zl"><div class="tile t-title"><b>Projects</b><span>Two systems built on public data</span></div></div>
+      <div class="zl"><div class="tile t-title"><b>Projects</b><span>From public data to real-time AI</span></div></div>
       <div class="zl"><div class="tile pic"><img src="img/mandato.webp" alt="Mandato365 home page"></div></div>
       <div class="zl"><div class="tile pic"><img src="img/airport.webp" alt="Airport terminal with a plane taking off"></div></div>
-      <div class="zl"><div class="tile pic"><img src="img/dashboard.webp" alt="Analytics dashboard"></div></div>
-      <div class="zl"><div class="tile pic"><img src="img/data.webp" alt="Data pipeline and code"></div></div>
+      <div class="zl"><div class="tile pic"><img src="img/f1.webp" alt="Formula 1 car cornering at Interlagos"></div></div>
+      <div class="zl"><div class="tile pic"><img src="img/baya.webp" alt="Baya.io pufferfish logo"></div></div>
       <div class="zl"><div class="tile pic"><svg class="net" viewBox="0 0 600 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="600" height="500" fill="#142A52"/><g fill="none" stroke="#86C5FF" stroke-width=".8" opacity=".38"><path d="M373.0 400.5 Q371.1 401.4 370.1 403.1"/><path d="M373.0 400.5 Q368.8 396.2 363.0 394.9"/><path d="M373.0 400.5 Q398.8 404.5 422.6 393.6"/><path d="M373.0 400.5 Q377.0 347.3 351.2 300.7"/><path d="M373.0 400.5 Q399.2 381.0 410.5 350.2"/><path d="M373.0 400.5 Q454.8 349.4 495.1 261.6"/><path d="M373.0 400.5 Q489.9 325.5 546.2 198.5"/><path d="M373.0 400.5 Q471.4 288.7 492.0 141.1"/><path d="M373.0 400.5 Q324.7 433.2 302.4 487.1"/><path d="M373.0 400.5 Q348.5 408.3 332.4 428.2"/><path d="M373.0 400.5 Q349.0 423.8 341.8 456.4"/><path d="M373.0 400.5 Q311.5 235.3 169.3 131.3"/><path d="M373.0 400.5 Q365.8 349.4 331.7 310.7"/><path d="M373.0 400.5 Q316.0 327.4 228.2 297.8"/><path d="M373.0 400.5 Q480.6 332.6 533.1 216.7"/><path d="M373.0 400.5 Q430.9 267.9 406.4 125.4"/><path d="M373.0 400.5 Q384.8 309.5 344.6 227.0"/><path d="M373.0 400.5 Q271.4 264.1 111.5 206.2"/><path d="M373.0 400.5 Q239.1 262.8 51.5 221.5"/><path d="M373.0 400.5 Q318.3 195.0 159.7 53.6"/><path d="M373.0 400.5 Q491.6 318.9 545.8 185.6"/><path d="M373.0 400.5 Q338.2 389.3 303.0 399.2"/><path d="M373.0 400.5 Q368.8 366.5 346.6 340.4"/><path d="M373.0 400.5 Q352.1 243.1 248.2 123.1"/><path d="M351.2 300.7 Q347.1 353.8 373.0 400.5"/><path d="M351.2 300.7 Q345.3 354.7 370.1 403.1"/><path d="M351.2 300.7 Q372.5 357.0 421.2 392.3"/><path d="M351.2 300.7 Q373.0 357.9 422.6 393.6"/><path d="M351.2 300.7 Q429.0 302.7 495.1 261.6"/><path d="M351.2 300.7 Q464.0 278.8 546.2 198.5"/><path d="M351.2 300.7 Q322.7 361.6 332.4 428.2"/><path d="M351.2 300.7 Q285.6 188.7 169.3 131.3"/><path d="M351.2 300.7 Q290.1 280.8 228.2 297.8"/><path d="M351.2 300.7 Q399.7 346.8 465.7 358.6"/><path d="M351.2 300.7 Q465.3 262.3 539.5 167.4"/><path d="M351.2 300.7 Q442.3 292.8 514.0 236.1"/><path d="M351.2 300.7 Q405.1 221.3 406.4 125.4"/><path d="M351.2 300.7 Q410.9 240.8 427.7 158.0"/><path d="M351.2 300.7 Q359.1 188.5 303.9 90.5"/><path d="M351.2 300.7 Q312.4 342.7 303.0 399.2"/><path d="M421.2 392.3 Q391.8 384.9 363.0 394.9"/><path d="M421.2 392.3 Q371.5 396.9 332.4 428.2"/><path d="M421.2 392.3 Q334.4 224.0 169.3 131.3"/><path d="M421.2 392.3 Q424.5 239.1 342.8 109.4"/><path d="M421.2 392.3 Q388.7 338.1 331.7 310.7"/><path d="M421.2 392.3 Q340.2 351.2 249.9 361.4"/><path d="M421.2 392.3 Q491.0 328.1 514.0 236.1"/><path d="M421.2 392.3 Q361.1 378.0 303.0 399.2"/><path d="M421.2 392.3 Q391.7 355.1 346.6 340.4"/><path d="M410.5 350.2 Q410.0 373.7 422.6 393.6"/><path d="M410.5 350.2 Q412.7 219.7 342.8 109.4"/><path d="M410.5 350.2 Q479.3 308.7 514.0 236.1"/><path d="M410.5 350.2 Q447.9 256.7 427.7 158.0"/><path d="M410.5 350.2 Q396.0 278.7 344.6 227.0"/><path d="M410.5 350.2 Q282.6 233.3 111.5 206.2"/><path d="M410.5 350.2 Q250.3 232.0 51.5 221.5"/><path d="M410.5 350.2 Q396.1 204.4 303.9 90.5"/><path d="M410.5 350.2 Q502.8 288.2 545.8 185.6"/><path d="M410.5 350.2 Q319.7 366.0 252.6 429.1"/><path d="M410.5 350.2 Q361.0 387.6 340.2 446.0"/><path d="M410.5 350.2 Q380.0 335.7 346.6 340.4"/><path d="M363.0 394.9 Q365.3 400.1 370.1 403.1"/><path d="M363.0 394.9 Q393.5 379.7 410.5 350.2"/><path d="M363.0 394.9 Q342.8 407.0 332.4 428.2"/><path d="M363.0 394.9 Q343.2 422.5 341.8 456.4"/><path d="M363.0 394.9 Q310.2 326.1 228.2 297.8"/><path d="M363.0 394.9 Q311.5 361.2 249.9 361.4"/><path d="M363.0 394.9 Q474.8 331.3 533.1 216.7"/><path d="M363.0 394.9 Q425.2 266.7 406.4 125.4"/><path d="M363.0 394.9 Q485.8 317.7 545.8 185.6"/><path d="M546.2 198.5 Q381.0 306.2 302.4 487.1"/><path d="M546.2 198.5 Q404.9 281.3 332.4 428.2"/><path d="M546.2 198.5 Q493.0 160.5 427.7 158.0"/><path d="M546.2 198.5 Q441.1 182.5 344.6 227.0"/><path d="M546.2 198.5 Q406.1 291.4 340.2 446.0"/><path d="M495.1 261.6 Q409.1 308.5 363.0 394.9"/><path d="M495.1 261.6 Q389.2 336.0 341.8 456.4"/><path d="M495.1 261.6 Q351.7 147.6 169.3 131.3"/><path d="M495.1 261.6 Q441.8 162.7 342.8 109.4"/><path d="M495.1 261.6 Q357.5 274.7 249.9 361.4"/><path d="M495.1 261.6 Q476.9 199.7 427.7 158.0"/><path d="M495.1 261.6 Q425.0 221.8 344.6 227.0"/><path d="M495.1 261.6 Q378.4 301.6 303.0 399.2"/><path d="M302.4 487.1 Q376.5 458.4 422.6 393.6"/><path d="M302.4 487.1 Q293.7 381.3 228.2 297.8"/><path d="M302.4 487.1 Q403.3 447.3 465.7 358.6"/><path d="M302.4 487.1 Q468.9 362.8 539.5 167.4"/><path d="M302.4 487.1 Q445.8 393.3 514.0 236.1"/><path d="M302.4 487.1 Q469.3 372.8 545.8 185.6"/></g><circle cx="373.0" cy="400.5" r="6" fill="#FFA62B"/><text fill="#F8E6A0" font-family="Schibsted Grotesk,Arial" font-size="13" font-weight="600" x="381.0" y="404.5">GRU</text><circle cx="370.1" cy="403.1" r="2.4" fill="#86C5FF"/><circle cx="363.0" cy="394.9" r="4" fill="#FFA62B"/><text fill="#F8E6A0" font-family="Schibsted Grotesk,Arial" font-size="13" font-weight="600" x="371.0" y="398.9">VCP</text><circle cx="421.2" cy="392.3" r="4" fill="#FFA62B"/><text fill="#F8E6A0" font-family="Schibsted Grotesk,Arial" font-size="13" font-weight="600" x="429.2" y="396.3">GIG</text><circle cx="422.6" cy="393.6" r="2.4" fill="#86C5FF"/><circle cx="351.2" cy="300.7" r="6" fill="#FFA62B"/><text fill="#F8E6A0" font-family="Schibsted Grotesk,Arial" font-size="13" font-weight="600" x="359.2" y="304.7">BSB</text><circle cx="410.5" cy="350.2" r="4" fill="#FFA62B"/><text fill="#F8E6A0" font-family="Schibsted Grotesk,Arial" font-size="13" font-weight="600" x="418.5" y="354.2">CNF</text><circle cx="495.1" cy="261.6" r="4" fill="#FFA62B"/><text fill="#F8E6A0" font-family="Schibsted Grotesk,Arial" font-size="13" font-weight="600" x="503.1" y="265.6">SSA</text><circle cx="546.2" cy="198.5" r="4" fill="#FFA62B"/><text fill="#F8E6A0" font-family="Schibsted Grotesk,Arial" font-size="13" font-weight="600" x="554.2" y="202.5">REC</text><circle cx="492.0" cy="141.1" r="2.4" fill="#86C5FF"/><circle cx="302.4" cy="487.1" r="4" fill="#FFA62B"/><text fill="#F8E6A0" font-family="Schibsted Grotesk,Arial" font-size="13" font-weight="600" x="310.4" y="491.1">POA</text><circle cx="332.4" cy="428.2" r="2.4" fill="#86C5FF"/><circle cx="341.8" cy="456.4" r="2.4" fill="#86C5FF"/><circle cx="169.3" cy="131.3" r="2.4" fill="#86C5FF"/><circle cx="342.8" cy="109.4" r="2.4" fill="#86C5FF"/><circle cx="331.7" cy="310.7" r="2.4" fill="#86C5FF"/><circle cx="228.2" cy="297.8" r="2.4" fill="#86C5FF"/><circle cx="249.9" cy="361.4" r="2.4" fill="#86C5FF"/><circle cx="465.7" cy="358.6" r="2.4" fill="#86C5FF"/><circle cx="539.5" cy="167.4" r="2.4" fill="#86C5FF"/><circle cx="533.1" cy="216.7" r="2.4" fill="#86C5FF"/><circle cx="514.0" cy="236.1" r="2.4" fill="#86C5FF"/><circle cx="406.4" cy="125.4" r="2.4" fill="#86C5FF"/><circle cx="427.7" cy="158.0" r="2.4" fill="#86C5FF"/><circle cx="344.6" cy="227.0" r="2.4" fill="#86C5FF"/><circle cx="111.5" cy="206.2" r="2.4" fill="#86C5FF"/><circle cx="51.5" cy="221.5" r="2.4" fill="#86C5FF"/><circle cx="159.7" cy="53.6" r="2.4" fill="#86C5FF"/><circle cx="303.9" cy="90.5" r="2.4" fill="#86C5FF"/><circle cx="545.8" cy="185.6" r="2.4" fill="#86C5FF"/><circle cx="252.6" cy="429.1" r="2.4" fill="#86C5FF"/><circle cx="340.2" cy="446.0" r="2.4" fill="#86C5FF"/><circle cx="303.0" cy="399.2" r="2.4" fill="#86C5FF"/><circle cx="346.6" cy="340.4" r="2.4" fill="#86C5FF"/><circle cx="248.2" cy="123.1" r="2.4" fill="#86C5FF"/><text x="20" y="482" fill="#FFFFFF" opacity=".75" font-family="Schibsted Grotesk,Arial" font-size="13">Domestic routes, ANAC open data</text></svg></div></div>
       <div class="zl"><div class="tile code" aria-hidden="true"><pre><span class="k">WITH</span> route_load <span class="k">AS</span> (
   <span class="k">SELECT</span> origin, dest, flight_date,
@@ -348,7 +362,72 @@
     </div>
   </section>
 
-  <!-- 4b. Mandato365 -->
+  <!-- 4b. F1 Strategy Intelligence -->
+  <section class="scene dark" id="f1" data-wash="0">
+    <div class="sticky">
+      <div class="scene-bg" aria-hidden="true"><img src="img/f1.webp" alt=""></div>
+      <div class="copy">
+        <span class="kicker">Statistical modelling · SAS Viya <em>2023–2025</em></span>
+        <h3>F1 Strategy Intelligence</h3>
+        <p class="what">Can Friday practice pace predict race lap times as tyres wear? Three seasons of public OpenF1 timing data, modelled and validated end to end.</p>
+        <ul class="points">
+          <li>54 dry races and 50,580 race laps, cleaned with audited rules for safety cars, red flags and pit laps.</li>
+          <li>Lap-time regression validated forward in time (2023 → 2024 and 2023–24 → 2025) with a paired race-level bootstrap.</li>
+          <li>A pit-strategy cost simulator for one- vs two-stop races, checked against an independent exhaustive search.</li>
+          <li>Negative results reported plainly: no model reliably beats the practice-pace baseline.</li>
+        </ul>
+        <ul class="stack"><li>SAS Viya</li><li>CAS</li><li>PROC REGSELECT</li><li>Python</li><li>SAS Visual Analytics</li></ul>
+        <div class="more"><a href="https://github.com/CaioBandeira7/f1-strategy-intelligence">Source code</a></div>
+      </div>
+      <figure class="visual" style="margin:0">
+        <div class="predict" role="img" aria-label="F1 Strategy Intelligence in numbers: 54 dry races, 50,580 race laps modelled, lap-time error of 1.134 seconds per lap in the 2025 evaluation, a tyre-age gain of 0.107 seconds per lap in 2024, and a seven-page SAS Visual Analytics dashboard.">
+          <div class="req"><div class="route">2023<span>/</span>25</div><div class="meta">OpenF1 timing data<br>Dry races only</div></div>
+          <dl class="kv">
+            <div><dt>Dry races analysed</dt><dd>54</dd></div>
+            <div><dt>Race laps modelled</dt><dd>50,580</dd></div>
+            <div><dt>Lap-time MAE, 2025 evaluation</dt><dd>1.134 s</dd></div>
+            <div><dt>Tyre-age gain, 2024 (95% CI above 0)</dt><dd>+0.107 s</dd></div>
+            <div><dt>SAS Visual Analytics dashboard</dt><dd>7 pages</dd></div>
+          </dl>
+        </div>
+        <figcaption class="cap">Headline numbers from the temporal validation.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 4c. Baya.io -->
+  <section class="scene light" id="baya" data-wash="0">
+    <div class="sticky">
+      <div class="scene-bg" aria-hidden="true"></div>
+      <div class="copy">
+        <span class="kicker">Real-time AI copilot <em>In progress</em></span>
+        <h3><img class="logo-mark" src="img/baya-logo.webp" alt="" aria-hidden="true">Baya.io</h3>
+        <p class="what">A desktop copilot that listens to a live conversation, detects questions and puts grounded answers on screen, running entirely on local hardware.</p>
+        <ul class="points">
+          <li>Captures system audio and segments speech with WebRTC voice activity detection in 30 ms frames.</li>
+          <li>Transcribes with Faster-Whisper on the GPU and detects questions as they are asked.</li>
+          <li>Shows cues grounded in the user's own notes; a local Llama 3.2 model is only a constrained fallback that abstains when the notes don't cover the question.</li>
+          <li>Next: document ingestion and RAG with source citations for technical, business and legal meetings.</li>
+        </ul>
+        <ul class="stack"><li>Python</li><li>Faster-Whisper</li><li>WebRTC VAD</li><li>Ollama</li><li>Tkinter</li></ul>
+        <div class="more"><a href="https://github.com/CaioBandeira7/baya-io">Source code</a></div>
+      </div>
+      <figure class="visual" style="margin:0">
+        <div class="flow">
+          <div class="tier"><b>Live audio</b><span>System audio capture and voice activity detection</span></div>
+          <div class="down" aria-hidden="true">↓</div>
+          <div class="tier ai"><b>Speech to text</b><span>Faster-Whisper on a local GPU, question detection</span></div>
+          <div class="down" aria-hidden="true">↓</div>
+          <div class="tier app"><b>Grounded cues</b><span>Prepared notes shown instantly, local LLM as fallback</span></div>
+          <div class="down" aria-hidden="true">↓</div>
+          <div class="tier next"><b>Document RAG</b><span>PDF and DOCX ingestion, semantic search, source citations</span></div>
+        </div>
+        <figcaption class="cap">The current prototype runs fully offline. The dashed step is in development.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 4d. Mandato365 -->
   <section class="scene dark" id="mandato" data-wash="0">
     <div class="sticky">
       <div class="scene-bg" aria-hidden="true"><img src="img/camara.webp" alt=""></div>
@@ -387,10 +466,10 @@
         <h2>What I work with</h2>
         <ul>
           <li><b>SQL</b><span>CTEs, window functions, complex joins, query optimization. BigQuery, PostgreSQL, ETL and star-schema modeling.</span></li>
-          <li><b>Analytics</b><span>Funnel and conversion analysis, segmentation, KPI design, A/B testing, regression, time series and forecasting.</span></li>
-          <li><b>BI and visualization</b><span>Power BI (DAX, Power Query), Looker Studio, Tableau, SAS Visual Analytics, advanced Excel and Sheets.</span></li>
-          <li><b>Python and ML</b><span>pandas, NumPy, scikit-learn, LightGBM, PyTorch. Also R and SAS.</span></li>
-          <li><b>AI and automation</b><span>AI tools to write and review SQL, LLM insight generation (Claude API), prompt engineering, RAG, UiPath.</span></li>
+          <li><b>Analytics and statistics</b><span>Funnel and conversion analysis, segmentation, KPI design, A/B testing, regression, time series, temporal validation and bootstrap confidence intervals.</span></li>
+          <li><b>BI and visualization</b><span>Power BI (DAX, Power Query), SAS Viya and Visual Analytics (CAS), Looker Studio, Tableau, advanced Excel and Sheets.</span></li>
+          <li><b>Python and ML</b><span>pandas, Polars, DuckDB, NumPy, scikit-learn, LightGBM, PyTorch. Also R and SAS.</span></li>
+          <li><b>AI and automation</b><span>LLM apps (Claude API, Groq tool calling), local models with Ollama, speech-to-text with Faster-Whisper, prompt engineering, RAG, UiPath.</span></li>
           <li><b>Engineering</b><span>FastAPI, Git, Docker, Next.js, scheduled jobs and data-quality audits.</span></li>
         </ul>
       </div>
@@ -579,7 +658,7 @@ function iconById(id) { for (var k = 0; k < ICONS.length; k++) if (ICONS[k].id =
   ScrollTrigger.create({ trigger: "#zoom", start: "bottom 60%", endTrigger: "#anac", end: "bottom 60%", onEnter: function () { setWash("#2E5AA7", 1); }, onEnterBack: function () { setWash("#2E5AA7", 1); }, onLeave: function () { setWash("#2E5AA7", 0); }, onLeaveBack: function () { setWash("#2E5AA7", 0); } });
   ScrollTrigger.create({ trigger: "#contact", start: "top 60%", onEnter: function () { setWash("#F8E6A0", 1); }, onLeaveBack: function () { setWash("#F8E6A0", 0); } });
 
-  ["#anac", "#mandato"].forEach(function (id) { ScrollTrigger.create({ trigger: id, start: "top 40px", end: "bottom 40px", onToggle: function (st) { document.body.classList.toggle("on-dark", st.isActive); } }); });
+  ["#anac", "#f1", "#mandato"].forEach(function (id) { ScrollTrigger.create({ trigger: id, start: "top 40px", end: "bottom 40px", onToggle: function (st) { document.body.classList.toggle("on-dark", st.isActive); } }); });
 
   // 3. Project scenes: copy lines and visual build in as you scroll
   gsap.utils.toArray(".scene").forEach(function (sc) {
@@ -587,7 +666,7 @@ function iconById(id) { for (var k = 0; k < ICONS.length; k++) if (ICONS[k].id =
     tl.to(sc.querySelectorAll(".copy > *"), { opacity: 1, y: 0, stagger: .12, ease: "power2.out" }, 0)
       .to(sc.querySelector(".visual"), { opacity: 1, scale: 1, ease: "power2.out" }, .1);
     sc.querySelectorAll(".bar i").forEach(function (b, i) { tl.to(b, { width: b.dataset.w + "%", ease: "power2.out" }, .3 + i * .08); });
-    var bgi = sc.querySelector(".scene-bg img"); if (bgi) gsap.fromTo(bgi, { yPercent: -6 }, { yPercent: 6, ease: "none", scrollTrigger: { trigger: sc, start: "top bottom", end: "bottom top", scrub: true } });
+    var bgi = sc.querySelector(".scene-bg img"); if (bgi && sc.id !== "baya") gsap.fromTo(bgi, { yPercent: -6 }, { yPercent: 6, ease: "none", scrollTrigger: { trigger: sc, start: "top bottom", end: "bottom top", scrub: true } });
     gsap.to(sc.querySelector(".sticky"), { opacity: 0, y: -40, ease: "none", scrollTrigger: { trigger: sc, start: "bottom 90%", end: "bottom 30%", scrub: true } });
   });
 
