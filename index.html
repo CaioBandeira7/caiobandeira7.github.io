@@ -185,6 +185,16 @@
   #baya .logo-mark { height: .95em; width: auto; }
   #baya .stack li { background: #E9F1FB; }
   #baya .scene-bg::after { display: none; }
+  #hakko .scene-bg { background: #F7F9FC; }
+  #hakko .scene-bg::after { display: none; }
+  #hakko .stack li { background: #fff; border: 1px solid #E2E8F0; }
+  .shot { border-radius: 14px; overflow: hidden; background: #fff; box-shadow: 0 40px 80px -40px rgba(20,33,61,.55); border: 1px solid #E2E8F0; }
+  .shot img { display: block; width: 100%; height: auto; }
+  .hakko-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
+  .hakko-stats div { background: #fff; border-radius: 12px; padding: 12px 14px; box-shadow: 0 20px 50px -35px rgba(20,33,61,.5); }
+  .hakko-stats b { display: block; font: 800 1.35rem/1 var(--display); letter-spacing: -0.02em; color: #14213D; }
+  .hakko-stats span { font-size: .8rem; color: var(--muted); }
+  @media (max-width: 760px) { .hakko-stats { gap: 6px; } .hakko-stats div { padding: 8px 10px; } .hakko-stats b { font-size: 1rem; } .hakko-stats span { font-size: .68rem; line-height: 1.2; display: block; } }
 
   /* ---------- 5. Toolkit morph ---------- */
   #morph { height: 420vh; }
@@ -427,6 +437,33 @@
           <div class="tier next"><b>Document RAG</b><span>PDF and DOCX ingestion, semantic search, source citations</span></div>
         </div>
         <figcaption class="cap">The current prototype runs fully offline. The dashed step is in development.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 4c2. hakko.io recruitment analytics -->
+  <section class="scene light" id="hakko" data-wash="0">
+    <div class="sticky">
+      <div class="scene-bg" aria-hidden="true"></div>
+      <div class="copy">
+        <span class="kicker">Power BI · People analytics <em>Nov 2026</em></span>
+        <h3>Beyond Cost per Hire</h3>
+        <p class="what">A three-page recruitment report that asks which hiring channels deliver people who stay and perform, not just the cheapest hire.</p>
+        <ul class="points">
+          <li>Social media looks cheapest at €988 per hire, but costs €2,524 per hire that succeeds at day 180, 54% more than employee referrals.</li>
+          <li>180-day outcomes measured on mature cohorts only, hire-weighted averages, minimum sample sizes and segment checks by seniority and country.</li>
+          <li>Dynamic headlines and insight cards that rewrite themselves for every filter, drill-down ZoomCharts visuals and report-page tooltips.</li>
+        </ul>
+        <ul class="stack"><li>Power BI</li><li>DAX</li><li>Power Query</li><li>ZoomCharts</li><li>Python</li></ul>
+        <div class="more"><a href="https://github.com/CaioBandeira7/hakko-recruitment-analytics">Case study and DAX</a></div>
+      </div>
+      <figure class="visual" style="margin:0">
+        <div class="shot"><img src="img/hakko-dashboard.webp" alt="Recruitment analytics dashboard comparing cost per hire and cost per successful hire by channel" loading="lazy"></div>
+        <div class="hakko-stats">
+          <div><b>€9.58M</b><span>recruitment spend analysed</span></div>
+          <div><b>4,048</b><span>hires followed to day 180</span></div>
+          <div><b>+54%</b><span>hidden cost of social media vs. referrals</span></div>
+        </div>
       </figure>
     </div>
   </section>
